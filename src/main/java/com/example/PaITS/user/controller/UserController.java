@@ -28,7 +28,6 @@ public class UserController {
     }
 
 
-    // ✅ CREATE USER (REGISTER)
     @PostMapping
     public ResponseEntity<UserResponse> createUser(
             @Valid @RequestBody CreateUserRequest request) {
@@ -36,13 +35,7 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(request));
     }
 
-    // ✅ GET USER BY ID
-//    @GetMapping("/{id}")
-//    public ResponseEntity<UserResponse> getUserById(
-//            @PathVariable UUID id) {
-//
-//        return ResponseEntity.ok(userService.getUserById(id));
-//    }
+
 
     @GetMapping("/me")
     public ResponseEntity<UserResponse> getMe(Authentication authentication) {

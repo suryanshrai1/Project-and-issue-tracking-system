@@ -32,8 +32,6 @@ public class ProjectController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    // ====== CREATE: Any authenticated user can create a project (becomes Leader)
-    // ======
     @PostMapping
     public ResponseEntity<ProjectResponseDTO> createProject(
             @Valid @RequestBody ProjectRequestDTO request,
@@ -44,7 +42,6 @@ public class ProjectController {
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    // ====== LIST: Admin sees all, Members see only their projects ======
     @GetMapping
     public ResponseEntity<List<ProjectResponseDTO>> getAllProjects(Authentication authentication) {
         User user = getCurrentUser(authentication);
@@ -56,7 +53,6 @@ public class ProjectController {
         }
     }
 
-    // ====== GET BY ID: Only Admin, Leader, or Members can view ======
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> getProjectById(
             @PathVariable UUID id,
@@ -66,7 +62,6 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.findById(id, currentUser));
     }
 
-    // ====== UPDATE: Only Admin or Leader ======
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> updateProject(
             @PathVariable UUID id,
@@ -78,7 +73,6 @@ public class ProjectController {
         return ResponseEntity.ok(updated);
     }
 
-    // ====== DELETE: Only Admin or Leader ======
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(
             @PathVariable UUID id,
@@ -89,7 +83,6 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    // ====== ADD MEMBER: Only Admin or Leader can add members ======
     @PostMapping("/{id}/members/{userId}")
     public ResponseEntity<ProjectResponseDTO> addMember(
             @PathVariable UUID id,
@@ -101,7 +94,6 @@ public class ProjectController {
         return ResponseEntity.ok(updated);
     }
 
-    // ====== REMOVE MEMBER: Only Admin or Leader can remove members ======
     @DeleteMapping("/{id}/members/{userId}")
     public ResponseEntity<ProjectResponseDTO> removeMember(
             @PathVariable UUID id,
